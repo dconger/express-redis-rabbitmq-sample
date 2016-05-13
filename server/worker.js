@@ -31,12 +31,10 @@ amqp
       var content = msg.content.toString(); 
       console.log('Saving message: ' + content); 
       
-      rp(content)
+      rp('http://' + content)
         .then(function(htmlString) {
           // connect to redis
-          let client = redis.createClient({
-            retry_strategy: retryStrategy
-          });
+          let client = redis.createClient();
 
           client.on('connect', function() {
             client.set(content, htmlString, (err, reply) => {
